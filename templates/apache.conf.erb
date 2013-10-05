@@ -11,7 +11,7 @@
     
                 AuthUserFile /etc/munin/munin.htpasswd
                 AuthName <%= @www_auth_realm %>
-                AuthType Basic
+                AuthType Digest
                 require valid-user
     
                 # Set the default expiration time for files to 5 minutes 10 seconds from
