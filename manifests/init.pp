@@ -4,8 +4,14 @@ class munin (
   $contacts = params_lookup('contacts'),
   $munin_conf_template = params_lookup('munin_conf_template'),
   $munin_node_conf_template = params_lookup('munin_node_conf_template'),
+  $apache_conf_template = params_lookup('apache_conf_template'),
+  $passwd_conf_template = params_lookup('passwd_conf_template'),
+  $www_auth_realm = params_lookup('www_auth_realm'),
+  $www_server_admin = params_lookup('www_server_admin'),
+  $www_server_name = params_lookup('www_server_name'),
+  $www_users = params_lookup('www_users'),
 ) inherits munin::params {
-  
+
   package { ['munin', 'munin-node']: ensure => latest }
   
   service { 'munin-node':
@@ -20,7 +26,23 @@ class munin (
     mode    => '0644',
     require => Package['munin'],
   }
-  
+
+  file { '/etc/munin/apache.conf':
+    content => template($apache_conf_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['munin'],
+  }
+
+  file { '/etc/munin/munin.htpasswd':
+    content => template($passwd_conf_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['munin'],
+  }
+
   file { '/etc/munin/munin-node.conf':
     content => template($munin_node_conf_template),
     owner   => 'root',
