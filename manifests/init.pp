@@ -6,6 +6,9 @@ class munin (
   $munin_node_conf_template = params_lookup('munin_node_conf_template'),
   $apache_conf_template = params_lookup('apache_conf_template'),
   $passwd_conf_template = params_lookup('passwd_conf_template'),
+  $passwd_owner = params_lookup('passwd_owner'),
+  $passwd_group = params_lookup('passwd_group'),
+  $passwd_mode = params_lookup('passwd_mode'),
   $www_auth_realm = params_lookup('www_auth_realm'),
   $www_server_admin = params_lookup('www_server_admin'),
   $www_server_name = params_lookup('www_server_name'),
@@ -37,9 +40,9 @@ class munin (
 
   file { '/etc/munin/munin.htpasswd':
     content => template($passwd_conf_template),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    owner   => $passwd_owner,
+    group   => $passwd_group,
+    mode    => $passwd_mode,
     require => Package['munin'],
   }
 

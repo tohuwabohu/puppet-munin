@@ -7,6 +7,9 @@ class munin::params {
   $munin_node_conf_template = 'munin/munin-node.conf.erb'
   $apache_conf_template = 'munin/apache.conf.erb'
   $passwd_conf_template = 'munin/munin.htpasswd.erb'
+  $passwd_owner = 'root'
+  $passwd_group = 'root'
+  $passwd_mode = '0640'
 
   $www_auth_realm = 'munin'
   $www_server_admin = 'webmaster@localhost'
