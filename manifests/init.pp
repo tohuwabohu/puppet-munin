@@ -15,11 +15,17 @@ class munin (
   
   file { '/etc/munin/munin.conf':
     content => template($munin_conf_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     require => Package['munin'],
   }
   
   file { '/etc/munin/munin-node.conf':
     content => template($munin_node_conf_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     require => Package['munin-node'],
     notify  => Service['munin-node'],
   }
