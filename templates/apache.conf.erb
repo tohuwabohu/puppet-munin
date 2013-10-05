@@ -1,29 +1,29 @@
 <VirtualHost *:80>
-    ServerAdmin <%= @www_server_admin %>
-    ServerName <%= @www_server_name %>
-    
-    DocumentRoot <%= @html_dir %>
-    AuthUserFile /etc/munin/munin.htpasswd
-    AuthName <%= @www_auth_realm %>    
-    AuthType Basic
-    require valid-user    
-
-    <Directory <%= @html_dir %>>
-            Options Indexes FollowSymLinks MultiViews
-            AllowOverride AuthConfig
-            Order allow,deny
-            allow from all
+        ServerAdmin <%= @www_server_admin %>
+        ServerName <%= @www_server_name %>
         
-        # Set the default expiration time for files to 5 minutes 10 seconds from
-        # their creation (modification) time.  There are probably new files by
-        # that time. 
-        #
-        <IfModule mod_expires.c>
-            ExpiresActive On
-            ExpiresDefault M310
-        </IfModule>
-    </Directory>
+        DocumentRoot <%= @html_dir %>
+        <Directory <%= @html_dir %>>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride AuthConfig
+                Order allow,deny
+                allow from all
     
-    LogLevel warn
-    ErrorLog /var/log/apache2/error.log
+                AuthUserFile /etc/munin/munin.htpasswd
+                AuthName <%= @www_auth_realm %>
+                AuthType Basic
+                require valid-user
+    
+                # Set the default expiration time for files to 5 minutes 10 seconds from
+                # their creation (modification) time.  There are probably new files by
+                # that time. 
+                #
+                <IfModule mod_expires.c>
+                    ExpiresActive On
+                    ExpiresDefault M310
+                </IfModule>
+        </Directory>
+        
+        LogLevel warn
+        ErrorLog /var/log/apache2/error.log
 </VirtualHost>
