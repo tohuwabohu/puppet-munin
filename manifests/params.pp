@@ -1,4 +1,4 @@
-class munin_standalone::params {
+class munin::params {
   $hostname = 'localhost.localdomain'
   $html_dir = '/var/cache/munin/www'
   $contacts = []

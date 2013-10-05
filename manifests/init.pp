@@ -1,10 +1,10 @@
-class munin_standalone (
+class munin (
   $hostname = params_lookup('hostname'),
   $html_dir = params_lookup('html_dir'),
   $contacts = params_lookup('contacts'),
   $munin_conf_template = params_lookup('munin_conf_template'),
   $munin_node_conf_template = params_lookup('munin_node_conf_template'),
-) inherits munin_standalone::params {
+) inherits munin::params {
   
   package { ['munin', 'munin-node']: ensure => latest }
   
