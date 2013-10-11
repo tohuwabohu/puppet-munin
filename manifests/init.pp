@@ -5,6 +5,7 @@ class munin (
   $munin_conf_template = params_lookup('munin_conf_template'),
   $munin_node_conf_template = params_lookup('munin_node_conf_template'),
   $apache_conf_template = params_lookup('apache_conf_template'),
+  $nginx_conf_template = params_lookup('nginx_conf_template'),
   $passwd_conf_template = params_lookup('passwd_conf_template'),
   $passwd_owner = params_lookup('passwd_owner'),
   $passwd_group = params_lookup('passwd_group'),

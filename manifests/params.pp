@@ -6,6 +6,7 @@ class munin::params {
   $munin_conf_template = 'munin/munin.conf.erb'
   $munin_node_conf_template = 'munin/munin-node.conf.erb'
   $apache_conf_template = 'munin/apache.conf.erb'
+  $nginx_conf_template = 'munin/nginx.conf.erb'
   $passwd_conf_template = 'munin/munin.htpasswd.erb'
   $passwd_owner = 'root'
   $passwd_group = 'root'

@@ -1,0 +1,17 @@
+server {
+    listen localhost:80;
+    server_name <%= @www_server_name %>;
+
+    root <%= @html_dir %>;
+    access_log off;
+
+    auth_basic <%= @www_auth_realm %>;
+    auth_basic_user_file /etc/munin/munin.htpasswd;
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    location ~ /\.ht {
+        deny all;
+    }
+}
