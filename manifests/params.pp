@@ -3,8 +3,9 @@ class munin::params {
   $html_dir = '/var/cache/munin/www'
   $contacts = []
   
-  $munin_conf_template = 'munin/munin.conf.erb'
-  $munin_node_conf_template = 'munin/munin-node.conf.erb'
+  $master_config_template = 'munin/munin.conf.erb'
+  $node_config_template = 'munin/munin-node.conf.erb'
+  
   $apache_conf_template = 'munin/apache.conf.erb'
   $nginx_conf_template = 'munin/nginx.conf.erb'
   $passwd_conf_template = 'munin/munin.htpasswd.erb'

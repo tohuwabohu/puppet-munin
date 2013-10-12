@@ -2,11 +2,14 @@ class munin (
   $hostname = params_lookup('hostname'),
   $html_dir = params_lookup('html_dir'),
   $contacts = params_lookup('contacts'),
-  $munin_conf_template = params_lookup('munin_conf_template'),
-  $munin_node_conf_template = params_lookup('munin_node_conf_template'),
+  
+  $master_config_template = params_lookup('master_config_template'),
+  $node_config_template = params_lookup('node_config_template'),
+  
   $apache_conf_template = params_lookup('apache_conf_template'),
   $nginx_conf_template = params_lookup('nginx_conf_template'),
   $passwd_conf_template = params_lookup('passwd_conf_template'),
+  
   $www_auth_realm = params_lookup('www_auth_realm'),
   $www_authorized_users = params_lookup('www_authorized_users'),
   $www_server_admin = params_lookup('www_server_admin'),
@@ -27,7 +30,7 @@ class munin (
   }
   
   file { $config_filename:
-    content => template($munin_conf_template),
+    content => template($munin::master_config_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -77,7 +80,7 @@ class munin (
   }
 
   file { '/etc/munin/munin-node.conf':
-    content => template($munin_node_conf_template),
+    content => template($munin::node_config_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
