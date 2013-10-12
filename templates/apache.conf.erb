@@ -21,7 +21,7 @@
     
                 AuthType basic
                 AuthName "<%= @www_auth_realm %>"
-                AuthUserFile <%= @www_password_file %>
+                AuthUserFile <%= @www_htpasswd_file %>
                 Require valid-user
     
                 # Set the default expiration time for files to 5 minutes 10 seconds from
