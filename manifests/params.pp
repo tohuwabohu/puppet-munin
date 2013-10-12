@@ -6,8 +6,8 @@ class munin::params {
   $master_config_template = 'munin/munin.conf.erb'
   $node_config_template = 'munin/munin-node.conf.erb'
   
-  $apache_conf_template = 'munin/apache.conf.erb'
-  $nginx_conf_template = 'munin/nginx.conf.erb'
+  $apache_config_template = 'munin/apache.conf.erb'
+  $nginx_config_template = 'munin/nginx.conf.erb'
 
   $www_auth_realm = 'Restricted Area'
   $www_authorized_users = {}

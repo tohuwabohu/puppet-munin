@@ -6,8 +6,8 @@ class munin (
   $master_config_template = params_lookup('master_config_template'),
   $node_config_template = params_lookup('node_config_template'),
   
-  $apache_conf_template = params_lookup('apache_conf_template'),
-  $nginx_conf_template = params_lookup('nginx_conf_template'),
+  $apache_config_template = params_lookup('apache_config_template'),
+  $nginx_config_template = params_lookup('nginx_config_template'),
   
   $www_auth_realm = params_lookup('www_auth_realm'),
   $www_authorized_users = params_lookup('www_authorized_users'),
@@ -56,7 +56,7 @@ class munin (
   }
 
   file { '/etc/munin/apache.conf':
-    content => template($apache_conf_template),
+    content => template($munin::apache_config_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -64,7 +64,7 @@ class munin (
   }
   
   file { '/etc/munin/nginx.conf':
-    content => template($nginx_conf_template),
+    content => template($munin::nginx_config_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
