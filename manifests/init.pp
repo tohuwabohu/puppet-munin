@@ -14,6 +14,8 @@ class munin (
   $www_server_admin = params_lookup('www_server_admin'),
   $www_server_name = params_lookup('www_server_name'),
   $www_users = params_lookup('www_users'),
+  $www_ssl_certificate = params_lookup('www_ssl_certificate'),
+  $www_ssl_key = params_lookup('www_ssl_key')
 ) inherits munin::params {
 
   $config_filename = '/etc/munin/munin.conf'
@@ -33,9 +35,35 @@ class munin (
     mode    => '0644',
     require => Package['munin'],
   }
+  
+  if $www_ssl_certificate == undef or $www_ssl_key == undef {
+    $www_ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
+    $www_ssl_certificate_file = "/etc/ssl/ssl-cert-snakeoil.pem"
+  }
+  else {
+    $www_ssl_key_file = "/etc/ssl/private/${munin::www_server_name}.pem"
+    $www_ssl_certificate_file = "/etc/ssl/${munin::www_server_name}.pem"
+
+    ssl::key { $www_ssl_key_file:
+      key   => $www_ssl_key,
+      group => 'www-data',
+    }
+    
+    ssl::certificate { $www_ssl_certificate_file:
+      certificate => $www_ssl_certificate,
+    }
+  }
 
   file { '/etc/munin/apache.conf':
     content => template($apache_conf_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['munin'],
+  }
+  
+  file { '/etc/munin/nginx.conf':
+    content => template($nginx_conf_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -58,4 +86,5 @@ class munin (
     require => Package['munin-node'],
     notify  => Service['munin-node'],
   }
+  
 }

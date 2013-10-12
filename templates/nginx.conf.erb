@@ -1,11 +1,19 @@
 server {
-    listen localhost:80;
+    listen 80;
+    server_name <%= @www_server_name %>;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    ssl_certificate <%= @www_ssl_certificate_file %>;
+    ssl_certificate_key <%= @www_ssl_key_file %>;
     server_name <%= @www_server_name %>;
 
     root <%= @html_dir %>;
     access_log off;
 
-    auth_basic <%= @www_auth_realm %>;
+    auth_basic "<%= @www_auth_realm %>";
     auth_basic_user_file <%= @www_password_file %>;
 
     # deny access to .htaccess files, if Apache's document root

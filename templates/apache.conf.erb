@@ -1,6 +1,16 @@
 <VirtualHost *:80>
         ServerAdmin <%= @www_server_admin %>
-        ServerName <%= @www_server_name %>
+        ServerName <%= @www_server_name %>:80
+
+        RedirectMatch 301 ^(.*)$ https://<%= @www_server_name %>$1
+</VirtualHost>
+<VirtualHost *:443>
+        ServerAdmin <%= @www_server_admin %>
+        ServerName <%= @www_server_name %>:443
+        
+        SSLEngine On
+        SSLCertificateFile <%= @www_ssl_certificate_file %>
+        SSLCertificateKeyFile <%= @www_ssl_key_file %>
         
         DocumentRoot <%= @html_dir %>
         <Directory <%= @html_dir %>>
@@ -9,10 +19,10 @@
                 Order allow,deny
                 allow from all
     
-                AuthType Digest
-                AuthName <%= @www_auth_realm %>
+                AuthType basic
+                AuthName "<%= @www_auth_realm %>"
                 AuthUserFile <%= @www_password_file %>
-                require valid-user
+                Require valid-user
     
                 # Set the default expiration time for files to 5 minutes 10 seconds from
                 # their creation (modification) time.  There are probably new files by
