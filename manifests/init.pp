@@ -16,6 +16,8 @@ class munin (
   $www_users = params_lookup('www_users'),
 ) inherits munin::params {
 
+  $www_password_file = '/etc/munin/munin.htpasswd'
+  
   package { ['munin', 'munin-node']: ensure => latest }
   
   service { 'munin-node':
@@ -39,7 +41,7 @@ class munin (
     require => Package['munin'],
   }
 
-  file { '/etc/munin/munin.htpasswd':
+  file { $www_password_file:
     content => template($passwd_conf_template),
     owner   => $passwd_owner,
     group   => $passwd_group,

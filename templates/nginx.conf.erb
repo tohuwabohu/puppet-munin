@@ -6,7 +6,7 @@ server {
     access_log off;
 
     auth_basic <%= @www_auth_realm %>;
-    auth_basic_user_file /etc/munin/munin.htpasswd;
+    auth_basic_user_file <%= @www_password_file %>;
 
     # deny access to .htaccess files, if Apache's document root
     # concurs with nginx's one
