@@ -8,10 +8,10 @@ class munin (
   
   $apache_conf_template = params_lookup('apache_conf_template'),
   $nginx_conf_template = params_lookup('nginx_conf_template'),
-  $passwd_conf_template = params_lookup('passwd_conf_template'),
   
   $www_auth_realm = params_lookup('www_auth_realm'),
   $www_authorized_users = params_lookup('www_authorized_users'),
+  $www_htpasswd_template = params_lookup('www_htpasswd_template'),
   $www_server_admin = params_lookup('www_server_admin'),
   $www_server_name = params_lookup('www_server_name'),
   $www_ssl_certificate = params_lookup('www_ssl_certificate'),
@@ -20,7 +20,7 @@ class munin (
 ) inherits munin::params {
 
   $config_filename = '/etc/munin/munin.conf'
-  $www_password_file = '/etc/munin/munin.htpasswd'  
+  $www_htpasswd_file = '/etc/munin/munin.htpasswd'  
   
   package { ['munin', 'munin-node']: ensure => latest }
   
@@ -71,8 +71,8 @@ class munin (
     require => Package['munin'],
   }
 
-  file { $www_password_file:
-    content => template($passwd_conf_template),
+  file { $www_htpasswd_file:
+    content => template($munin::www_htpasswd_template),
     owner   => 'root',
     group   => $munin::www_user,
     mode    => '0640',
