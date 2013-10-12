@@ -7,15 +7,13 @@ class munin (
   $apache_conf_template = params_lookup('apache_conf_template'),
   $nginx_conf_template = params_lookup('nginx_conf_template'),
   $passwd_conf_template = params_lookup('passwd_conf_template'),
-  $passwd_owner = params_lookup('passwd_owner'),
-  $passwd_group = params_lookup('passwd_group'),
-  $passwd_mode = params_lookup('passwd_mode'),
   $www_auth_realm = params_lookup('www_auth_realm'),
   $www_authorized_users = params_lookup('www_authorized_users'),
   $www_server_admin = params_lookup('www_server_admin'),
   $www_server_name = params_lookup('www_server_name'),
   $www_ssl_certificate = params_lookup('www_ssl_certificate'),
-  $www_ssl_key = params_lookup('www_ssl_key')
+  $www_ssl_key = params_lookup('www_ssl_key'),
+  $www_user = params_lookup('www_user')
 ) inherits munin::params {
 
   $config_filename = '/etc/munin/munin.conf'
@@ -46,7 +44,7 @@ class munin (
 
     ssl::key { $www_ssl_key_file:
       key   => $www_ssl_key,
-      group => 'www-data',
+      group => $munin::www_user,
     }
     
     ssl::certificate { $www_ssl_certificate_file:
@@ -72,9 +70,9 @@ class munin (
 
   file { $www_password_file:
     content => template($passwd_conf_template),
-    owner   => $passwd_owner,
-    group   => $passwd_group,
-    mode    => $passwd_mode,
+    owner   => 'root',
+    group   => $munin::www_user,
+    mode    => '0640',
     require => Package['munin'],
   }
 

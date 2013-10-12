@@ -8,9 +8,6 @@ class munin::params {
   $apache_conf_template = 'munin/apache.conf.erb'
   $nginx_conf_template = 'munin/nginx.conf.erb'
   $passwd_conf_template = 'munin/munin.htpasswd.erb'
-  $passwd_owner = 'root'
-  $passwd_group = 'root'
-  $passwd_mode = '0640'
 
   $www_auth_realm = 'Restricted Area'
   $www_authorized_users = {}
@@ -18,4 +15,5 @@ class munin::params {
   $www_server_name = 'example.com'
   $www_ssl_certificate = undef
   $www_ssl_key = undef
+  $www_user = 'www-data'
 }
