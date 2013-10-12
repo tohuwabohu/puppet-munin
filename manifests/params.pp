@@ -13,9 +13,9 @@ class munin::params {
   $passwd_mode = '0640'
 
   $www_auth_realm = 'Restricted Area'
+  $www_authorized_users = {}
   $www_server_admin = 'webmaster@localhost'
   $www_server_name = 'example.com'
   $www_ssl_certificate = undef
   $www_ssl_key = undef
-  $www_users = {}
 }

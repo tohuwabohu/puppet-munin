@@ -11,9 +11,9 @@ class munin (
   $passwd_group = params_lookup('passwd_group'),
   $passwd_mode = params_lookup('passwd_mode'),
   $www_auth_realm = params_lookup('www_auth_realm'),
+  $www_authorized_users = params_lookup('www_authorized_users'),
   $www_server_admin = params_lookup('www_server_admin'),
   $www_server_name = params_lookup('www_server_name'),
-  $www_users = params_lookup('www_users'),
   $www_ssl_certificate = params_lookup('www_ssl_certificate'),
   $www_ssl_key = params_lookup('www_ssl_key')
 ) inherits munin::params {
