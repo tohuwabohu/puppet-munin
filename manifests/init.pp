@@ -38,11 +38,11 @@ class munin (
   
   if $munin::www_ssl_certificate == undef or $munin::www_ssl_key == undef {
     $www_ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
-    $www_ssl_certificate_file = "/etc/ssl/ssl-cert-snakeoil.pem"
+    $www_ssl_certificate_file = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
   }
   else {
     $www_ssl_key_file = "/etc/ssl/private/${munin::www_server_name}.pem"
-    $www_ssl_certificate_file = "/etc/ssl/${munin::www_server_name}.pem"
+    $www_ssl_certificate_file = "/etc/ssl/certs/${munin::www_server_name}.pem"
 
     ssl::key { $www_ssl_key_file:
       key   => $munin::www_ssl_key,
