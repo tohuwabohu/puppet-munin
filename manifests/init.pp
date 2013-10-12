@@ -19,7 +19,6 @@ class munin (
   $www_user = params_lookup('www_user')
 ) inherits munin::params {
 
-  $config_filename = '/etc/munin/munin.conf'
   $www_htpasswd_file = '/etc/munin/munin.htpasswd'  
   
   package { ['munin', 'munin-node']: ensure => latest }
@@ -29,7 +28,7 @@ class munin (
     require => Package['munin-node'],
   }
   
-  file { $config_filename:
+  file { '/etc/munin/munin.conf':
     content => template($munin::master_config_template),
     owner   => 'root',
     group   => 'root',
@@ -37,7 +36,7 @@ class munin (
     require => Package['munin'],
   }
   
-  if $www_ssl_certificate == undef or $www_ssl_key == undef {
+  if $munin::www_ssl_certificate == undef or $munin::www_ssl_key == undef {
     $www_ssl_key_file = "/etc/ssl/private/ssl-cert-snakeoil.key"
     $www_ssl_certificate_file = "/etc/ssl/ssl-cert-snakeoil.pem"
   }
@@ -46,12 +45,12 @@ class munin (
     $www_ssl_certificate_file = "/etc/ssl/${munin::www_server_name}.pem"
 
     ssl::key { $www_ssl_key_file:
-      key   => $www_ssl_key,
+      key   => $munin::www_ssl_key,
       group => $munin::www_user,
     }
     
     ssl::certificate { $www_ssl_certificate_file:
-      certificate => $www_ssl_certificate,
+      certificate => $munin::www_ssl_certificate,
     }
   }
 
@@ -71,7 +70,7 @@ class munin (
     require => Package['munin'],
   }
 
-  file { $www_htpasswd_file:
+  file { $munin::www_htpasswd_file:
     content => template($munin::www_htpasswd_template),
     owner   => 'root',
     group   => $munin::www_user,
