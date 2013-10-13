@@ -33,8 +33,10 @@ host_name <%= @hostname %>
 
 allow ^127\.0\.0\.1$
 
-# Which address to bind to;
+# Which address and port to bind to;
 host 127.0.0.1
-
-# And which port
 port 4949
+
+# Number of seconds: After that time of no activity the node will close
+# the connection.
+timeout <%= @timeout %>

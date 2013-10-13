@@ -2,6 +2,7 @@ class munin (
   $hostname = params_lookup('hostname'),
   $html_dir = params_lookup('html_dir'),
   $contacts = params_lookup('contacts'),
+  $timeout = params_lookup('timeout'),
   
   $master_config_template = params_lookup('master_config_template'),
   $node_config_template = params_lookup('node_config_template'),
