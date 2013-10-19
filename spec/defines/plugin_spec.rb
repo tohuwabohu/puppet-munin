@@ -10,7 +10,6 @@ describe 'munin::plugin' do
       'target' => '/usr/share/munin/plugins/pluginA',
       'owner'  => 'root',
       'group'  => 'root',
-      'mode'   => '0644',
     }) 
   end
 end
