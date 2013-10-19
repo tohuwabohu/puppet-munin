@@ -19,4 +19,14 @@ describe 'munin' do
     it { should contain_package('munin').with_ensure('1.0.0') }
     it { should contain_package('munin-node').with_ensure('1.0.0') }
   end
+
+  describe 'disable service' do
+    let(:params) { {:disable => true } }
+
+    it { should contain_file('/etc/munin/munin.conf') }
+    it { should contain_file('/etc/munin/munin-node.conf') }
+    it { should contain_package('munin').with_ensure('latest') }
+    it { should contain_package('munin-node').with_ensure('latest') }
+    it { should contain_service('munin-node').with_ensure('stopped').with_enable(false) }
+  end
 end

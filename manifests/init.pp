@@ -3,6 +3,7 @@ class munin (
   $html_dir = params_lookup('html_dir'),
   $contacts = params_lookup('contacts'),
   $timeout = params_lookup('timeout'),
+  $disable = params_lookup('disable'),
   $version = params_lookup('version'),
   
   $master_config_template = params_lookup('master_config_template'),
@@ -22,11 +23,23 @@ class munin (
 ) inherits munin::params {
 
   $www_htpasswd_file = '/etc/munin/munin.htpasswd'  
-  
+  $bool_disable = any2bool($disable)
+
+  $manage_service_ensure = $munin::bool_disable ? {
+    true    => 'stopped',
+    default => 'running',
+  }
+
+  $manage_service_enable = $munin::bool_disable ? {
+    true    => false,
+    default => true,
+  }
+
   package { ['munin', 'munin-node']: ensure => $munin::version }
   
   service { 'munin-node':
-    ensure  => running,
+    ensure  => $manage_service_ensure,
+    enable  => $manage_service_enable,
     require => Package['munin-node'],
   }
   
