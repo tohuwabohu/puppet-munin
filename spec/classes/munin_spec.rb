@@ -12,4 +12,11 @@ describe 'munin' do
     it { should contain_package('munin-node').with_ensure('latest') }
     it { should contain_service('munin-node').with_ensure('running') }
   end
+
+  describe 'custom version' do
+    let(:params) { {:version => '1.0.0' } }
+
+    it { should contain_package('munin').with_ensure('1.0.0') }
+    it { should contain_package('munin-node').with_ensure('1.0.0') }
+  end
 end

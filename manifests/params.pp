@@ -3,6 +3,7 @@ class munin::params {
   $html_dir = '/var/cache/munin/www'
   $contacts = []
   $timeout = 60
+  $version = 'latest'
   
   $master_config_template = 'munin/munin.conf.erb'
   $node_config_template = 'munin/munin-node.conf.erb'

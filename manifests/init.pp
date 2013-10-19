@@ -3,6 +3,7 @@ class munin (
   $html_dir = params_lookup('html_dir'),
   $contacts = params_lookup('contacts'),
   $timeout = params_lookup('timeout'),
+  $version = params_lookup('version'),
   
   $master_config_template = params_lookup('master_config_template'),
   $node_config_template = params_lookup('node_config_template'),
@@ -22,7 +23,7 @@ class munin (
 
   $www_htpasswd_file = '/etc/munin/munin.htpasswd'  
   
-  package { ['munin', 'munin-node']: ensure => latest }
+  package { ['munin', 'munin-node']: ensure => $munin::version }
   
   service { 'munin-node':
     ensure  => running,
