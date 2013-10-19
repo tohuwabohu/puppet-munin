@@ -29,4 +29,11 @@ describe 'munin' do
     it { should contain_package('munin-node').with_ensure('latest') }
     it { should contain_service('munin-node').with_ensure('stopped').with_enable(false) }
   end
+
+  describe 'manages plugins' do
+    let(:params) { {:plugins => ['pluginA', 'pluginB'] } }
+
+    it { should contain_munin__plugin('pluginA') }
+    it { should contain_munin__plugin('pluginB') }
+  end
 end

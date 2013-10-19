@@ -2,6 +2,7 @@ class munin (
   $hostname = params_lookup('hostname'),
   $html_dir = params_lookup('html_dir'),
   $contacts = params_lookup('contacts'),
+  $plugins = params_lookup('plugins'),
   $timeout = params_lookup('timeout'),
   $disable = params_lookup('disable'),
   $version = params_lookup('version'),
@@ -102,4 +103,5 @@ class munin (
     notify  => Service['munin-node'],
   }
   
+  munin::plugin { $plugins: }
 }

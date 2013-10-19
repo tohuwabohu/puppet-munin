@@ -2,6 +2,7 @@ class munin::params {
   $hostname = $::fqdn
   $html_dir = '/var/cache/munin/www'
   $contacts = []
+  $plugins = []
   $timeout = 60
   $version = 'latest'
   
