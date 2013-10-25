@@ -1,8 +1,18 @@
-define munin::plugin($owner = 'root', $group = 'root') {
+# = Definition: munin::plugin
+#
+# An enabled muinin plugin.
+#
+# == Parameters
+#
+# [*name*]
+#   Sets the plugin name.
+#
+# == Author
+#   Martin Meinhold <Martin.Meinhold@gmx.de>
+#
+define munin::plugin() {
   file { "/etc/munin/plugins/${name}":
     ensure => 'link',
     target => "/usr/share/munin/plugins/${name}",
-    owner  => $owner,
-    group  => $group,
   }
 }

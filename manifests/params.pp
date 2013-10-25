@@ -1,3 +1,10 @@
+# Class: munin::params
+#
+# Default configuration for the munin class.
+#
+# == Author
+#   Martin Meinhold <Martin.Meinhold@gmx.de>
+#
 class munin::params {
   $hostname = $::fqdn
   $html_dir = '/var/cache/munin/www'
@@ -5,10 +12,10 @@ class munin::params {
   $plugins = []
   $timeout = 60
   $version = 'latest'
-  
+
   $master_config_template = 'munin/munin.conf.erb'
   $node_config_template = 'munin/munin-node.conf.erb'
-  
+
   $apache_config_template = 'munin/apache.conf.erb'
   $nginx_config_template = 'munin/nginx.conf.erb'
 
