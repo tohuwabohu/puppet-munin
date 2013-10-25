@@ -90,8 +90,26 @@ class munin (
   $www_user = params_lookup('www_user')
 ) inherits munin::params {
 
-  $www_htpasswd_file = '/etc/munin/munin.htpasswd'
+  validate_string($hostname)
+  validate_absolute_path($html_dir)
+  validate_array($contacts)
+  validate_array($plugins)
+  validate_string($timeout)
   $bool_disable = any2bool($disable)
+  validate_string($version)
+  validate_string($master_config_template)
+  validate_string($node_config_template)
+  validate_string($apache_config_template)
+  validate_string($nginx_config_template)
+  validate_string($www_auth_realm)
+  validate_hash($www_authorized_users)
+  validate_string($www_htpasswd_template)
+  $www_htpasswd_file = '/etc/munin/munin.htpasswd'
+  validate_string($www_server_admin)
+  validate_string($www_server_name)
+  validate_string($www_ssl_certificate)
+  validate_string($www_ssl_key)
+  validate_string($www_user)
 
   $manage_service_ensure = $munin::bool_disable ? {
     true    => 'stopped',
