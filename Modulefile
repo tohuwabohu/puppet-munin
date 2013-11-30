@@ -1,5 +1,5 @@
 name 'MartinMeinhold-munin'
-version '1.9.4'
+version '1.9.5'
 
 author 'Martin Meinhold'
 license 'Apache License, Version 2.0'
