@@ -20,6 +20,14 @@ describe 'munin' do
     specify { should contain_package('munin-node').with_ensure('1.0.0') }
   end
 
+  describe 'with ensure => absent' do
+    let(:params) { {:ensure => 'absent' } }
+
+    specify { should contain_package('munin').with_ensure('absent') }
+    specify { should contain_package('munin-node').with_ensure('absent') }
+    specify { should_not contain_service('munin-node') }
+  end
+
   describe 'with disable => true' do
     let(:params) { {:disable => true } }
 
