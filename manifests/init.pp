@@ -121,20 +121,14 @@ class munin (
     default => true,
   }
 
-  package { ['munin', 'munin-node']: ensure => $munin::version }
+  package { ['munin', 'munin-node']: ensure => $munin::version } ->
+
+  class { 'munin::config': } ~>
 
   service { 'munin-node':
     ensure  => $manage_service_ensure,
     enable  => $manage_service_enable,
     require => Package['munin-node'],
-  }
-
-  file { '/etc/munin/munin.conf':
-    content => template($munin::master_config_template),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    require => Package['munin'],
   }
 
   if $munin::www_ssl_certificate == undef or $munin::www_ssl_key == undef {
