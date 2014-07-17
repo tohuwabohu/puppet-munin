@@ -10,6 +10,7 @@ class munin::params {
   $html_dir = '/var/cache/munin/www'
   $contacts = []
   $plugins = []
+  $disable = false
   $timeout = 60
   $version = 'latest'
 

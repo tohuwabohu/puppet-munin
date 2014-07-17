@@ -66,28 +66,28 @@
 #   Martin Meinhold <Martin.Meinhold@gmx.de>
 #
 class munin (
-  $hostname = params_lookup('hostname'),
-  $html_dir = params_lookup('html_dir'),
-  $contacts = params_lookup('contacts'),
-  $plugins = params_lookup('plugins'),
-  $timeout = params_lookup('timeout'),
-  $disable = params_lookup('disable'),
-  $version = params_lookup('version'),
+  $hostname               = $munin::params::hostname,
+  $html_dir               = $munin::params::html_dir,
+  $contacts               = $munin::params::contacts,
+  $plugins                = $munin::params::plugins,
+  $timeout                = $munin::params::timeout,
+  $disable                = $munin::params::disable,
+  $version                = $munin::params::version,
 
-  $master_config_template = params_lookup('master_config_template'),
-  $node_config_template = params_lookup('node_config_template'),
+  $master_config_template = $munin::params::master_config_template,
+  $node_config_template   = $munin::params::node_config_template,
 
-  $apache_config_template = params_lookup('apache_config_template'),
-  $nginx_config_template = params_lookup('nginx_config_template'),
+  $apache_config_template = $munin::params::apache_config_template,
+  $nginx_config_template  = $munin::params::nginx_config_template,
 
-  $www_auth_realm = params_lookup('www_auth_realm'),
-  $www_authorized_users = params_lookup('www_authorized_users'),
-  $www_htpasswd_template = params_lookup('www_htpasswd_template'),
-  $www_server_admin = params_lookup('www_server_admin'),
-  $www_server_name = params_lookup('www_server_name'),
-  $www_ssl_certificate = params_lookup('www_ssl_certificate'),
-  $www_ssl_key = params_lookup('www_ssl_key'),
-  $www_user = params_lookup('www_user')
+  $www_auth_realm         = $munin::params::www_auth_realm,
+  $www_authorized_users   = $munin::params::www_authorized_users,
+  $www_htpasswd_template  = $munin::params::www_htpasswd_template,
+  $www_server_admin       = $munin::params::www_server_admin,
+  $www_server_name        = $munin::params::www_server_name,
+  $www_ssl_certificate    = $munin::params::www_ssl_certificate,
+  $www_ssl_key            = $munin::params::www_ssl_key,
+  $www_user               = $munin::params::www_user
 ) inherits munin::params {
 
   validate_string($hostname)
@@ -95,7 +95,7 @@ class munin (
   validate_array($contacts)
   validate_array($plugins)
   validate_string($timeout)
-  $bool_disable = any2bool($disable)
+  validate_bool($disable)
   validate_string($version)
   validate_string($master_config_template)
   validate_string($node_config_template)
@@ -111,12 +111,12 @@ class munin (
   validate_string($www_ssl_key)
   validate_string($www_user)
 
-  $manage_service_ensure = $munin::bool_disable ? {
+  $manage_service_ensure = $disable ? {
     true    => 'stopped',
     default => 'running',
   }
 
-  $manage_service_enable = $munin::bool_disable ? {
+  $manage_service_enable = $disable ? {
     true    => false,
     default => true,
   }
