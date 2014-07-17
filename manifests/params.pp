@@ -15,11 +15,11 @@ class munin::params {
   $version = 'latest'
 
   $master_package_name = 'munin'
-  $master_config_template = 'munin/munin.conf.erb'
+  $master_config_template = 'munin/etc/munin/munin.conf.erb'
 
   $node_package_name = 'munin-node'
   $node_service_name = 'munin-node'
-  $node_config_template = 'munin/munin-node.conf.erb'
+  $node_config_template = 'munin/etc/munin/munin-node.conf.erb'
 
   $apache_config_template = 'munin/apache.conf.erb'
   $nginx_config_template = 'munin/nginx.conf.erb'
