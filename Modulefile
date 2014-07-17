@@ -1,5 +1,5 @@
 name 'tohuwabohu-munin'
-version '1.0'
+version '1.0.0'
 
 author 'Martin Meinhold'
 license 'Apache License, Version 2.0'
