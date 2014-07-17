@@ -28,8 +28,8 @@ describe 'munin' do
     specify { should_not contain_service('munin-node') }
   end
 
-  describe 'with disable => true' do
-    let(:params) { {:disable => true } }
+  describe 'with enable => false' do
+    let(:params) { {:enable => false } }
 
     specify { should contain_file('/etc/munin/munin.conf') }
     specify { should contain_file('/etc/munin/munin-node.conf') }

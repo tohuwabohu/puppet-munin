@@ -11,14 +11,10 @@
 # Copyright 2014 Martin Meinhold, unless otherwise noted.
 #
 class munin::service inherits munin {
-  $manage_service_ensure = $munin::disable ? {
-    true    => 'stopped',
-    default => 'running',
-  }
-
-  $manage_service_enable = $munin::disable ? {
-    true    => false,
-    default => true,
+  $manage_service_enable = $munin::enable
+  $manage_service_ensure = $munin::enable ? {
+    false   => stopped,
+    default => running,
   }
 
   if $munin::ensure !~ /absent/ {

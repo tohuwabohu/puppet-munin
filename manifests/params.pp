@@ -7,7 +7,7 @@
 #
 class munin::params {
   $ensure = installed
-  $disable = false
+  $enable = true
 
   $hostname = $::fqdn
   $html_dir = '/var/cache/munin/www'

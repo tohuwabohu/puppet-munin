@@ -37,7 +37,7 @@
 #
 class munin (
   $ensure                 = $munin::params::ensure,
-  $disable                = $munin::params::disable,
+  $enable                 = $munin::params::enable,
   $hostname               = $munin::params::hostname,
   $html_dir               = $munin::params::html_dir,
   $contacts               = $munin::params::contacts,
@@ -49,7 +49,7 @@ class munin (
 ) inherits munin::params {
 
   validate_string($ensure)
-  validate_bool($disable)
+  validate_bool($enable)
   validate_string($hostname)
   validate_absolute_path($html_dir)
   validate_array($contacts)
