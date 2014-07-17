@@ -157,14 +157,5 @@ class munin (
     require => Package['munin'],
   }
 
-  file { '/etc/munin/munin-node.conf':
-    content => template($munin::node_config_template),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    require => Package['munin-node'],
-    notify  => Service['munin-node'],
-  }
-
   munin::plugin { $plugins: }
 }

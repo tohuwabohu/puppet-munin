@@ -12,10 +12,18 @@
 #
 class munin::config inherits munin {
   file { '/etc/munin/munin.conf':
+    ensure  => file,
     content => template($munin::master_config_template),
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => Package['munin'],
+  }
+
+  file { '/etc/munin/munin-node.conf':
+    ensure  => file,
+    content => template($munin::node_config_template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
   }
 }
