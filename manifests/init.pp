@@ -38,15 +38,6 @@
 # [*nginx_config_template*]
 #   Template used for the nginx configuration.
 #
-# [*www_auth_realm*]
-#   Sets the authentication realm used in the HTTP configuration.
-#
-# [*www_authorized_users*]
-#   A hash map of users with their password authorized to access the report page.
-#
-# [*www_htpasswd_template*]
-#   Template used for the .htpasswd file.
-#
 # [*www_server_admin*]
 #   Sets the email address of the server admin.
 #
@@ -80,9 +71,6 @@ class munin (
   $apache_config_template = $munin::params::apache_config_template,
   $nginx_config_template  = $munin::params::nginx_config_template,
 
-  $www_auth_realm         = $munin::params::www_auth_realm,
-  $www_authorized_users   = $munin::params::www_authorized_users,
-  $www_htpasswd_template  = $munin::params::www_htpasswd_template,
   $www_server_admin       = $munin::params::www_server_admin,
   $www_server_name        = $munin::params::www_server_name,
   $www_ssl_certificate    = $munin::params::www_ssl_certificate,
@@ -101,10 +89,6 @@ class munin (
   validate_string($node_config_template)
   validate_string($apache_config_template)
   validate_string($nginx_config_template)
-  validate_string($www_auth_realm)
-  validate_hash($www_authorized_users)
-  validate_string($www_htpasswd_template)
-  $www_htpasswd_file = '/etc/munin/munin.htpasswd'
   validate_string($www_server_admin)
   validate_string($www_server_name)
   validate_string($www_ssl_certificate)
@@ -146,14 +130,6 @@ class munin (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => Package['munin'],
-  }
-
-  file { $munin::www_htpasswd_file:
-    content => template($munin::www_htpasswd_template),
-    owner   => 'root',
-    group   => $munin::www_user,
-    mode    => '0640',
     require => Package['munin'],
   }
 
