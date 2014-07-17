@@ -17,6 +17,6 @@ class munin::install inherits munin {
   ]
 
   package { $packages:
-    ensure => $munin::version
+    ensure => $munin::ensure
   }
 }

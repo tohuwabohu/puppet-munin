@@ -8,13 +8,13 @@ describe 'munin' do
 
     specify { should contain_file('/etc/munin/munin.conf') }
     specify { should contain_file('/etc/munin/munin-node.conf') }
-    specify { should contain_package('munin').with_ensure('latest') }
-    specify { should contain_package('munin-node').with_ensure('latest') }
+    specify { should contain_package('munin').with_ensure('installed') }
+    specify { should contain_package('munin-node').with_ensure('installed') }
     specify { should contain_service('munin-node').with_ensure('running') }
   end
 
-  describe 'with version => 1.0.0' do
-    let(:params) { {:version => '1.0.0' } }
+  describe 'with ensure => 1.0.0' do
+    let(:params) { {:ensure => '1.0.0' } }
 
     specify { should contain_package('munin').with_ensure('1.0.0') }
     specify { should contain_package('munin-node').with_ensure('1.0.0') }
@@ -25,8 +25,8 @@ describe 'munin' do
 
     specify { should contain_file('/etc/munin/munin.conf') }
     specify { should contain_file('/etc/munin/munin-node.conf') }
-    specify { should contain_package('munin').with_ensure('latest') }
-    specify { should contain_package('munin-node').with_ensure('latest') }
+    specify { should contain_package('munin') }
+    specify { should contain_package('munin-node') }
     specify { should contain_service('munin-node').with_ensure('stopped').with_enable(false) }
   end
 
