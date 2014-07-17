@@ -111,24 +111,9 @@ class munin (
   validate_string($www_ssl_key)
   validate_string($www_user)
 
-  $manage_service_ensure = $disable ? {
-    true    => 'stopped',
-    default => 'running',
-  }
-
-  $manage_service_enable = $disable ? {
-    true    => false,
-    default => true,
-  }
-
   class { 'munin::install': } ->
   class { 'munin::config': } ~>
-
-  service { 'munin-node':
-    ensure  => $manage_service_ensure,
-    enable  => $manage_service_enable,
-    require => Package['munin-node'],
-  }
+  class { 'munin::service': }
 
   if $munin::www_ssl_certificate == undef or $munin::www_ssl_key == undef {
     $www_ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'

@@ -18,6 +18,7 @@ class munin::params {
   $master_config_template = 'munin/munin.conf.erb'
 
   $node_package_name = 'munin-node'
+  $node_service_name = 'munin-node'
   $node_config_template = 'munin/munin-node.conf.erb'
 
   $apache_config_template = 'munin/apache.conf.erb'
