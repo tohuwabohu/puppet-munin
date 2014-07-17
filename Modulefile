@@ -1,4 +1,4 @@
-name 'MartinMeinhold-munin'
+name 'tohuwabohu-munin'
 version '1.0'
 
 author 'Martin Meinhold'
