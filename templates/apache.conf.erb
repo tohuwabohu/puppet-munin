@@ -20,12 +20,12 @@
                 AllowOverride AuthConfig
                 Order allow,deny
                 allow from all
-    
+
                 AuthType basic
                 AuthName "<%= @www_auth_realm %>"
                 AuthUserFile <%= @www_htpasswd_file %>
                 Require valid-user
-    
+
                 # Set the default expiration time for files to 5 minutes 10 seconds from
                 # their creation (modification) time.  There are probably new files by
                 # that time. 
