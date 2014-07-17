@@ -121,8 +121,7 @@ class munin (
     default => true,
   }
 
-  package { ['munin', 'munin-node']: ensure => $munin::version } ->
-
+  class { 'munin::install': } ->
   class { 'munin::config': } ~>
 
   service { 'munin-node':

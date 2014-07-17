@@ -14,7 +14,10 @@ class munin::params {
   $timeout = 60
   $version = 'latest'
 
+  $master_package_name = 'munin'
   $master_config_template = 'munin/munin.conf.erb'
+
+  $node_package_name = 'munin-node'
   $node_config_template = 'munin/munin-node.conf.erb'
 
   $apache_config_template = 'munin/apache.conf.erb'
