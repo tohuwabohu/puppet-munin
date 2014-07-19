@@ -10,6 +10,7 @@ describe 'munin' do
     let(:params) { { } }
 
     specify { should contain_file(master_config_file) }
+    specify { should contain_file(master_config_file).with_content(/htmldir \/var\/cache\/munin\/www/) }
     specify { should contain_file(node_config_file) }
     specify { should contain_file(node_config_file).with_content(/host_name node.example.com/) }
     specify { should contain_file(node_config_file).with_content(/timeout 60/) }
@@ -51,6 +52,20 @@ describe 'munin' do
     specify do
       expect { should contain_file(master_config_file) }.to raise_error(Puppet::Error, /master_config_template/)
     end
+  end
+
+  describe 'should not accept invalid master_html_dir' do
+    let(:params) { {:master_html_dir => 'invalid'} }
+
+    specify do
+      expect { should contain_file(master_config_file) }.to raise_error(Puppet::Error, /"invalid" is not an absolute path/)
+    end
+  end
+
+  describe 'should accept valid master_html_dir' do
+    let(:params) { {:master_html_dir => '/path/to/dir'} }
+
+    specify { should contain_file(master_config_file).with_content(/htmldir \/path\/to\/dir/) }
   end
 
   describe 'should not accept empty node_config_template' do

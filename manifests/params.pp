@@ -9,12 +9,14 @@ class munin::params {
   $ensure = installed
   $enable = true
 
-  $html_dir = '/var/cache/munin/www'
   $contacts = []
   $plugins = []
 
   $master_package_name = 'munin'
   $master_config_template = 'munin/etc/munin/munin.conf.erb'
+  $master_html_dir = $::osfamily ? {
+    default => '/var/cache/munin/www'
+  }
 
   $node_package_name = 'munin-node'
   $node_service_name = 'munin-node'

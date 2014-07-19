@@ -10,9 +10,6 @@
 # [*enable*]
 #   Set to `false` to stop and disable any running service(s)
 #
-# [*html_dir*]
-#   Sets the directory where munin writes the statistics.
-#
 # [*contacts*]
 #   An array of contact email address to be notified when a warn or
 #   critical state has been reached.
@@ -22,6 +19,9 @@
 #
 # [*master_config_template*]
 #   Template used for the master node configuration.
+#
+# [*master_html_dir*]
+#   Sets the directory where munin writes the statistics.
 #
 # [*node_config_template*]
 #   Template used for the node configuration.
@@ -38,11 +38,12 @@
 class munin (
   $ensure                 = $munin::params::ensure,
   $enable                 = $munin::params::enable,
-  $html_dir               = $munin::params::html_dir,
   $contacts               = $munin::params::contacts,
   $plugins                = $munin::params::plugins,
 
   $master_config_template = $munin::params::master_config_template,
+  $master_html_dir        = $munin::params::master_html_dir,
+
   $node_config_template   = $munin::params::node_config_template,
   $node_hostname          = $munin::params::node_hostname,
   $node_timeout           = $munin::params::node_timeout,
@@ -50,13 +51,14 @@ class munin (
 
   validate_string($ensure)
   validate_bool($enable)
-  validate_absolute_path($html_dir)
   validate_array($contacts)
   validate_array($plugins)
 
   if empty($master_config_template) {
     fail('Class[Munin]: master_config_template must not be empty')
   }
+
+  validate_absolute_path($master_html_dir)
 
   if empty($node_config_template) {
     fail('Class[Munin]: node_config_template must not be empty')
