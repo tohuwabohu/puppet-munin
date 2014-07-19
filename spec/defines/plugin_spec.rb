@@ -24,8 +24,22 @@ describe 'munin::plugin' do
   describe 'should not accept invalid ensure' do
     let(:params) { {:ensure => 'invalid'} }
 
-    should do
+    specify do
       expect { should contain_file(plugin_ref) }.to raise_error(Puppet::Error, /ensure/)
+    end
+  end
+
+  describe 'should accept custom target' do
+    let(:params) { {:target => '/path/to/file'} }
+
+    specify { should contain_file(plugin_ref).with_target('/path/to/file') }
+  end
+
+  describe 'should not accept invalid target' do
+    let(:params) { {:target => 'invalid'} }
+
+    specify do
+      expect { should contain_file(plugin_ref) }.to raise_error(Puppet::Error, /"invalid" is not an absolute path/)
     end
   end
 end
