@@ -16,7 +16,7 @@
 #
 define munin::plugin(
   $ensure = present,
-  $target = "/usr/share/munin/plugins/${name}",
+  $target = "/usr/share/munin/plugins/${title}",
 ) {
   if $ensure !~ /present|absent/ {
     fail("Munin::Plugin[${title}]: ensure must be either present or absent, got '${ensure}'")
@@ -31,7 +31,7 @@ define munin::plugin(
     default  => link,
   }
 
-  file { "${munin::params::node_plugins_dir}/${name}":
+  file { "${munin::params::node_plugins_dir}/${title}":
     ensure  => $file_ensure,
     target  => $target,
     owner   => 'root',
