@@ -53,8 +53,15 @@ class munin (
   validate_absolute_path($html_dir)
   validate_array($contacts)
   validate_array($plugins)
-  validate_string($master_config_template)
-  validate_string($node_config_template)
+
+  if empty($master_config_template) {
+    fail('Class[Munin]: master_config_template must not be empty')
+  }
+
+  if empty($node_config_template) {
+    fail('Class[Munin]: node_config_template must not be empty')
+  }
+
   if empty($node_hostname) {
     fail('Class[Munin]: node_hostname must not be empty')
   }

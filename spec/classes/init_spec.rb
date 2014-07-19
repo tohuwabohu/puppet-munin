@@ -45,6 +45,22 @@ describe 'munin' do
     specify { should contain_service('munin-node').with_ensure('stopped').with_enable(false) }
   end
 
+  describe 'should not accept empty master_config_template' do
+    let(:params) { {:master_config_template => ''} }
+
+    specify do
+      expect { should contain_file(master_conf_file) }.to raise_error(Puppet::Error, /master_config_template/)
+    end
+  end
+
+  describe 'should not accept empty node_config_template' do
+    let(:params) { {:node_config_template => ''} }
+
+    specify do
+      expect { should contain_file(node_conf_file) }.to raise_error(Puppet::Error, /node_config_template/)
+    end
+  end
+
   describe 'should not accept empty node_hostname' do
     let(:params) { {:node_hostname => ''} }
 
