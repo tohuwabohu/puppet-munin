@@ -12,8 +12,13 @@
 #
 class munin::config inherits munin {
   $file_ensure = $munin::ensure ? {
-    /absent/  => absent,
-    default   => file,
+    /absent/ => absent,
+    default  => file,
+  }
+
+  $directory_ensure = $munin::ensure ? {
+    /absent/ => absent,
+    default  => directory,
   }
 
   file { '/etc/munin/munin.conf':
@@ -30,5 +35,16 @@ class munin::config inherits munin {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+  }
+
+  file { $munin::params::node_plugins_dir:
+    ensure  => $directory_ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    backup  => false,
+    force   => true,
+    recurse => true,
+    purge   => $munin::disable_unmanaged_plugins,
   }
 }

@@ -17,6 +17,9 @@
 # [*plugins*]
 #   An array of plugins to be enabled.
 #
+# [*disable_unmanaged_plugins*]
+#   Set to `true` to disable any plugin that is not managed by Puppet. Defaults to `false`.
+#
 # [*master_config_template*]
 #   Template used for the master node configuration.
 #
@@ -36,24 +39,26 @@
 #   Martin Meinhold <Martin.Meinhold@gmx.de>
 #
 class munin (
-  $ensure                 = $munin::params::ensure,
-  $enable                 = $munin::params::enable,
+  $ensure                    = $munin::params::ensure,
+  $enable                    = $munin::params::enable,
 
-  $contacts               = $munin::params::contacts,
-  $plugins                = $munin::params::plugins,
+  $contacts                  = $munin::params::contacts,
+  $plugins                   = $munin::params::plugins,
+  $disable_unmanaged_plugins = $munin::params::disable_unmanaged_plugins,
 
-  $master_config_template = $munin::params::master_config_template,
-  $master_html_dir        = $munin::params::master_html_dir,
+  $master_config_template    = $munin::params::master_config_template,
+  $master_html_dir           = $munin::params::master_html_dir,
 
-  $node_config_template   = $munin::params::node_config_template,
-  $node_hostname          = $munin::params::node_hostname,
-  $node_timeout           = $munin::params::node_timeout,
+  $node_config_template      = $munin::params::node_config_template,
+  $node_hostname             = $munin::params::node_hostname,
+  $node_timeout              = $munin::params::node_timeout,
 ) inherits munin::params {
 
   validate_string($ensure)
   validate_bool($enable)
   validate_array($contacts)
   validate_array($plugins)
+  validate_bool($disable_unmanaged_plugins)
 
   if empty($master_config_template) {
     fail('Class[Munin]: master_config_template must not be empty')

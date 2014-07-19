@@ -4,6 +4,7 @@ describe 'munin' do
   let(:title) { 'munin' }
   let(:master_config_file) { '/etc/munin/munin.conf' }
   let(:node_config_file) { '/etc/munin/munin-node.conf' }
+  let(:plugins_dir) { '/etc/munin/plugins' }
   let(:facts) { {:fqdn => 'node.example.com' } }
 
   describe 'by default' do
@@ -14,6 +15,12 @@ describe 'munin' do
     specify { should contain_file(node_config_file) }
     specify { should contain_file(node_config_file).with_content(/host_name node.example.com/) }
     specify { should contain_file(node_config_file).with_content(/timeout 60/) }
+    specify { should contain_file(plugins_dir).with ({
+        'force'   => 'true',
+        'recurse' => 'true',
+        'purge'   => 'false'
+      })
+    }
     specify { should contain_package('munin').with_ensure('installed') }
     specify { should contain_package('munin-node').with_ensure('installed') }
     specify { should contain_service('munin-node').with_ensure('running') }
@@ -31,6 +38,7 @@ describe 'munin' do
 
     specify { should contain_file(master_config_file).with_ensure('absent') }
     specify { should contain_file(node_config_file).with_ensure('absent') }
+    specify { should contain_file(plugins_dir).with_ensure('absent') }
     specify { should contain_package('munin').with_ensure('absent') }
     specify { should contain_package('munin-node').with_ensure('absent') }
     specify { should_not contain_service('munin-node') }
@@ -117,5 +125,16 @@ describe 'munin' do
 
     specify { should contain_munin__plugin('pluginA') }
     specify { should contain_munin__plugin('pluginB') }
+  end
+
+  describe 'should purge disabled unmanaged plugins when told so' do
+    let(:params) { {:disable_unmanaged_plugins => true} }
+
+    specify { should contain_file(plugins_dir).with ({
+        'force'   => 'true',
+        'recurse' => 'true',
+        'purge'   => 'true'
+      })
+    }
   end
 end

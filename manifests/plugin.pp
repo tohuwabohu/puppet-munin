@@ -31,7 +31,7 @@ define munin::plugin(
     default  => link,
   }
 
-  file { "${munin::params::node_plugin_dir}/${name}":
+  file { "${munin::params::node_plugins_dir}/${name}":
     ensure  => $file_ensure,
     target  => $target,
     owner   => 'root',

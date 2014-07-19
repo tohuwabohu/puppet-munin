@@ -11,6 +11,7 @@ class munin::params {
 
   $contacts = []
   $plugins = []
+  $disable_unmanaged_plugins = false
 
   $master_package_name = 'munin'
   $master_config_template = 'munin/etc/munin/munin.conf.erb'
@@ -21,7 +22,7 @@ class munin::params {
   $node_package_name = 'munin-node'
   $node_service_name = 'munin-node'
   $node_config_template = 'munin/etc/munin/munin-node.conf.erb'
-  $node_plugin_dir = $::osfamily ? {
+  $node_plugins_dir = $::osfamily ? {
     default => '/etc/munin/plugins'
   }
   $node_hostname = $::fqdn
