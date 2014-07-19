@@ -54,6 +54,21 @@ describe 'munin' do
     specify { should contain_service('munin-node').with_ensure('stopped').with_enable(false) }
   end
 
+  describe 'should not accept empty node_hostname' do
+    let(:params) { {:hostname => ''} }
+
+    specify do
+      expect { should contain_file(node_config_file) }.to raise_error(Puppet::Error, /hostname/)
+    end
+  end
+
+  describe 'should accept custom hostname' do
+    let(:params) { {:hostname => 'beaf.example.com'} }
+
+    specify { should contain_file(master_config_file).with_content(/\[beaf.example.com\]/) }
+    specify { should contain_file(node_config_file).with_content(/host_name beaf.example.com/) }
+  end
+
   describe 'should not accept empty master_config_template' do
     let(:params) { {:master_config_template => ''} }
 
@@ -82,20 +97,6 @@ describe 'munin' do
     specify do
       expect { should contain_file(node_config_file) }.to raise_error(Puppet::Error, /node_config_template/)
     end
-  end
-
-  describe 'should not accept empty node_hostname' do
-    let(:params) { {:node_hostname => ''} }
-
-    specify do
-      expect { should contain_file(node_config_file) }.to raise_error(Puppet::Error, /node_hostname/)
-    end
-  end
-
-  describe 'should accept custom node_hostname' do
-    let(:params) { {:node_hostname => 'beaf.example.com'} }
-
-    specify { should contain_file(node_config_file).with_content(/host_name beaf.example.com/) }
   end
 
   describe 'should not accept empty node_timeout' do

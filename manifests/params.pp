@@ -9,6 +9,7 @@ class munin::params {
   $ensure = installed
   $enable = true
 
+  $hostname = $::fqdn
   $contacts = []
   $plugins = []
   $disable_unmanaged_plugins = false
@@ -25,6 +26,5 @@ class munin::params {
   $node_plugins_dir = $::osfamily ? {
     default => '/etc/munin/plugins'
   }
-  $node_hostname = $::fqdn
   $node_timeout = 60
 }

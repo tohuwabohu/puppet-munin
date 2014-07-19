@@ -10,6 +10,9 @@
 # [*enable*]
 #   Set to `false` to stop and disable any running service(s)
 #
+# [*hostname*]
+#   Sets the hostname in the master's and node's configuration. Defaults to ::fqdn.
+#
 # [*contacts*]
 #   An array of contact email address to be notified when a warn or
 #   critical state has been reached.
@@ -29,9 +32,6 @@
 # [*node_config_template*]
 #   Template used for the node configuration.
 #
-# [*node_hostname*]
-#   Sets the hostname in the node's configuration. Defaults to ::fqdn.
-#
 # [*node_timeout*]
 #   Sets the timeout in seconds the node service waits when collecting the results. Defaults to 60 seconds.
 #
@@ -42,6 +42,7 @@ class munin (
   $ensure                    = $munin::params::ensure,
   $enable                    = $munin::params::enable,
 
+  $hostname                  = $munin::params::hostname,
   $contacts                  = $munin::params::contacts,
   $plugins                   = $munin::params::plugins,
   $disable_unmanaged_plugins = $munin::params::disable_unmanaged_plugins,
@@ -50,12 +51,16 @@ class munin (
   $master_html_dir           = $munin::params::master_html_dir,
 
   $node_config_template      = $munin::params::node_config_template,
-  $node_hostname             = $munin::params::node_hostname,
   $node_timeout              = $munin::params::node_timeout,
 ) inherits munin::params {
 
   validate_string($ensure)
   validate_bool($enable)
+
+  if empty($hostname) {
+    fail('Class[Munin]: hostname must not be empty')
+  }
+
   validate_array($contacts)
   validate_array($plugins)
   validate_bool($disable_unmanaged_plugins)
@@ -68,10 +73,6 @@ class munin (
 
   if empty($node_config_template) {
     fail('Class[Munin]: node_config_template must not be empty')
-  }
-
-  if empty($node_hostname) {
-    fail('Class[Munin]: node_hostname must not be empty')
   }
 
   if $node_timeout !~ /\d+/ {
