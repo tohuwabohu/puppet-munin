@@ -27,7 +27,7 @@
 #   Template used for the node configuration.
 #
 # [*node_hostname*]
-#   Sets the hostname in the munin configuration.
+#   Sets the hostname in the node's configuration. Defaults to ::fqdn.
 #
 # [*node_timeout*]
 #   Sets the timeout in seconds the node service waits when collecting the results. Defaults to 60 seconds.
