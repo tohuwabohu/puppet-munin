@@ -23,6 +23,8 @@ describe 'munin' do
   describe 'with ensure => absent' do
     let(:params) { {:ensure => 'absent' } }
 
+    specify { should contain_file('/etc/munin/munin.conf').with_ensure('absent') }
+    specify { should contain_file('/etc/munin/munin-node.conf').with_ensure('absent') }
     specify { should contain_package('munin').with_ensure('absent') }
     specify { should contain_package('munin-node').with_ensure('absent') }
     specify { should_not contain_service('munin-node') }

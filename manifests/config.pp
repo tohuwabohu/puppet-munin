@@ -11,8 +11,13 @@
 # Copyright 2014 Martin Meinhold, unless otherwise noted.
 #
 class munin::config inherits munin {
+  $file_ensure = $munin::ensure ? {
+    /absent/  => absent,
+    default   => file,
+  }
+
   file { '/etc/munin/munin.conf':
-    ensure  => file,
+    ensure  => $file_ensure,
     content => template($munin::master_config_template),
     owner   => 'root',
     group   => 'root',
@@ -20,7 +25,7 @@ class munin::config inherits munin {
   }
 
   file { '/etc/munin/munin-node.conf':
-    ensure  => file,
+    ensure  => $file_ensure,
     content => template($munin::node_config_template),
     owner   => 'root',
     group   => 'root',
