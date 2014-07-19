@@ -7,6 +7,9 @@
 # [*ensure*]
 #   What state the package should be in. Passed through to package resource.
 #
+# [*enable*]
+#   Set to `false` to stop and disable any running service(s)
+#
 # [*hostname*]
 #   Sets the hostname in the munin configuration.
 #
@@ -22,9 +25,6 @@
 #
 # [*timeout*]
 #   Sets the timeout the node waits when collecting the results.
-#
-# [*disable*]
-#   Set to 'true' to disable service(s) managed by module
 #
 # [*master_config_template*]
 #   Template used for the master node configuration.
