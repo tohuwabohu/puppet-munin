@@ -38,6 +38,7 @@
 class munin (
   $ensure                 = $munin::params::ensure,
   $enable                 = $munin::params::enable,
+
   $contacts               = $munin::params::contacts,
   $plugins                = $munin::params::plugins,
 
