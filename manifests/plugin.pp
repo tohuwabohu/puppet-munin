@@ -4,13 +4,15 @@
 #
 # == Parameters
 #
-# [*name*]
-#   Sets the plugin name.
+# [*ensure*]
+#   What state the plugin should be in: either present or absent.
 #
 # == Author
 #   Martin Meinhold <Martin.Meinhold@gmx.de>
 #
-define munin::plugin($ensure = present) {
+define munin::plugin(
+  $ensure = present
+) {
   if $ensure !~ /present|absent/ {
     fail("Munin::Plugin[${title}]: ensure must be either present or absent, got '${ensure}'")
   }
