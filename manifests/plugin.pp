@@ -1,6 +1,6 @@
 # = Definition: munin::plugin
 #
-# An enabled muinin plugin.
+# An enabled munin plugin.
 #
 # == Parameters
 #
