@@ -12,7 +12,6 @@ class munin::params {
   $html_dir = '/var/cache/munin/www'
   $contacts = []
   $plugins = []
-  $timeout = 60
 
   $master_package_name = 'munin'
   $master_config_template = 'munin/etc/munin/munin.conf.erb'
@@ -21,4 +20,5 @@ class munin::params {
   $node_service_name = 'munin-node'
   $node_config_template = 'munin/etc/munin/munin-node.conf.erb'
   $node_hostname = $::fqdn
+  $node_timeout = 60
 }

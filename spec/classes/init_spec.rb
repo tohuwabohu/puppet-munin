@@ -11,6 +11,7 @@ describe 'munin' do
     specify { should contain_file('/etc/munin/munin.conf') }
     specify { should contain_file(node_conf_file) }
     specify { should contain_file(node_conf_file).with_content(/host_name node.example.com/) }
+    specify { should contain_file(node_conf_file).with_content(/timeout 60/) }
     specify { should contain_package('munin').with_ensure('installed') }
     specify { should contain_package('munin-node').with_ensure('installed') }
     specify { should contain_service('munin-node').with_ensure('running') }
@@ -55,6 +56,28 @@ describe 'munin' do
     let(:params) { {:node_hostname => 'beaf.example.com'} }
 
     specify { should contain_file(node_conf_file).with_content(/host_name beaf.example.com/) }
+  end
+
+  describe 'should not accept empty node_timeout' do
+    let(:params) { {:node_timeout => ''} }
+
+    specify do
+      expect { should contain_file(node_conf_file) }.to raise_error(Puppet::Error, /node_timeout/)
+    end
+  end
+
+  describe 'should not accept invalid node_timeout' do
+    let(:params) { {:node_timeout => 'invalid'} }
+
+    specify do
+      expect { should contain_file(node_conf_file) }.to raise_error(Puppet::Error, /node_timeout/)
+    end
+  end
+
+  describe 'should accept custom node_timeout' do
+    let(:params) { {:node_timeout => 120} }
+
+    specify { should contain_file(node_conf_file).with_content(/timeout 120/) }
   end
 
   describe 'with plugins => [pluginA, pluginB]' do
