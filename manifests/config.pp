@@ -26,7 +26,7 @@ class munin::config inherits munin {
     content => template($munin::master_config_template),
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0444',
   }
 
   file { '/etc/munin/munin-node.conf':
@@ -34,7 +34,7 @@ class munin::config inherits munin {
     content => template($munin::node_config_template),
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => '0444',
   }
 
   file { $munin::params::node_plugins_dir:
