@@ -24,12 +24,14 @@ define munin::plugin(
 
   validate_absolute_path($target)
 
+  require munin::params
+
   $file_ensure = $ensure ? {
     /absent/ => absent,
     default  => link,
   }
 
-  file { "/etc/munin/plugins/${name}":
+  file { "${munin::params::node_plugin_dir}/${name}":
     ensure  => $file_ensure,
     target  => $target,
     owner   => 'root',
