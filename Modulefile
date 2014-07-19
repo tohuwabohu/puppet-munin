@@ -9,4 +9,3 @@ summary 'Puppet module for Munin'
 description 'This module installs and manages Munin.'
 
 dependency 'puppetlabs/stdlib', '4.x'
-dependency 'example42/puppi', '2.x'
