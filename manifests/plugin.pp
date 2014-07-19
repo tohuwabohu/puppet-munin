@@ -10,18 +10,12 @@
 # == Author
 #   Martin Meinhold <Martin.Meinhold@gmx.de>
 #
-define munin::plugin(
-  $owner = 'root',
-  $group = 'root'
-) {
-  validate_string($owner)
-  validate_string($group)
-
+define munin::plugin {
   file { "/etc/munin/plugins/${name}":
     ensure  => 'link',
     target  => "/usr/share/munin/plugins/${name}",
-    owner   => $owner,
-    group   => $group,
+    owner   => 'root',
+    group   => 'root',
     require => Class['munin::install'],
     notify  => Class['munin::service'],
   }
