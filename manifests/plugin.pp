@@ -7,6 +7,9 @@
 # [*ensure*]
 #   What state the plugin should be in: either present or absent.
 #
+# [*source_url*]
+#   URL where to download the plugin source code file from. Optional.
+#
 # [*target*]
 #   Set the target file providing the plugin functionality. Use if plugin is not contained in the munin plugins
 #   directory or the file doesn't match for other reasons.
@@ -15,8 +18,9 @@
 #   Martin Meinhold <Martin.Meinhold@gmx.de>
 #
 define munin::plugin(
-  $ensure = present,
-  $target = "/usr/share/munin/plugins/${title}",
+  $ensure     = present,
+  $source_url = undef,
+  $target     = "/usr/share/munin/plugins/${title}",
 ) {
   if $ensure !~ /present|absent/ {
     fail("Munin::Plugin[${title}]: ensure must be either present or absent, got '${ensure}'")
@@ -29,6 +33,13 @@ define munin::plugin(
   $file_ensure = $ensure ? {
     /absent/ => absent,
     default  => link,
+  }
+
+  if !empty($source_url) {
+    wget::fetch { $source_url:
+      destination => $munin::params::node_plugins_dir,
+      timeout     => 30,
+    }
   }
 
   file { "${munin::params::node_plugins_dir}/${title}":

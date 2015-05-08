@@ -3,6 +3,9 @@ fixtures:
     stdlib:
       repo: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
       ref: "4.1.0"
+    wget:
+      repo: "https://github.com/maestrodev/puppet-wget.git"
+      ref: "v1.7.0"
   symlinks:
     munin: "#{source_dir}"
 

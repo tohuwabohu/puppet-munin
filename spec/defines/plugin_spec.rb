@@ -42,4 +42,10 @@ describe 'munin::plugin' do
       expect { should contain_file(plugin_ref) }.to raise_error(Puppet::Error, /"invalid" is not an absolute path/)
     end
   end
+
+  describe 'should accept source_url' do
+    let(:params) { {:source_url => 'http://example.com/foobar'} }
+
+    specify { should contain_wget__fetch('http://example.com/foobar') }
+  end
 end
