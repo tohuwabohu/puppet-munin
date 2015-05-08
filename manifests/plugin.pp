@@ -37,7 +37,7 @@ define munin::plugin(
 
   if !empty($source_url) {
     wget::fetch { $source_url:
-      destination => $munin::params::node_plugins_dir,
+      destination => "${munin::params::node_plugins_dir}/${title}",
       timeout     => 30,
     }
   }
