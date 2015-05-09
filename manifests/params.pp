@@ -23,6 +23,7 @@ class munin::params {
   $node_package_name = 'munin-node'
   $node_service_name = 'munin-node'
   $node_config_template = 'munin/etc/munin/munin-node.conf.erb'
+  $node_plugins_local_install_dir = '/usr/local/share/munin/plugins'
   $node_plugins_dir = $::osfamily ? {
     default => '/etc/munin/plugins'
   }

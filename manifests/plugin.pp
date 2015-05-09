@@ -20,15 +20,25 @@
 define munin::plugin(
   $ensure     = present,
   $source_url = undef,
-  $target     = "/usr/share/munin/plugins/${title}",
+  $target     = undef,
 ) {
   if $ensure !~ /present|absent/ {
     fail("Munin::Plugin[${title}]: ensure must be either present or absent, got '${ensure}'")
   }
 
-  validate_absolute_path($target)
+  if !empty($target) {
+    validate_absolute_path($target)
+  }
 
   require munin::params
+
+  $real_target = empty($target) ? {
+    true    => empty($source_url) ? {
+      true    => "/usr/share/munin/plugins/${title}",
+      default => "${munin::params::node_plugins_local_install_dir}/${title}",
+    },
+    default => $target,
+  }
 
   $file_ensure = $ensure ? {
     /absent/ => absent,
@@ -37,14 +47,22 @@ define munin::plugin(
 
   if !empty($source_url) {
     wget::fetch { $source_url:
-      destination => "${munin::params::node_plugins_dir}/${title}",
+      destination => $real_target,
       timeout     => 30,
+    }
+
+    file { $real_target:
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      require => Wget::Fetch[$source_url],
     }
   }
 
   file { "${munin::params::node_plugins_dir}/${title}":
     ensure  => $file_ensure,
-    target  => $target,
+    target  => $real_target,
     owner   => 'root',
     group   => 'root',
     require => Class['munin::install'],
