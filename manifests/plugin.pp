@@ -49,6 +49,7 @@ define munin::plugin(
     wget::fetch { $source_url:
       destination => $real_target,
       timeout     => 30,
+      require     => File[$munin::params::node_plugins_local_install_dir],
     }
 
     file { $real_target:
