@@ -18,7 +18,7 @@ class munin::service inherits munin {
   }
 
   if $munin::ensure !~ /absent/ {
-    service { $munin::params::node_service_name:
+    service { $munin::node_service_name:
       ensure  => $manage_service_ensure,
       enable  => $manage_service_enable,
     }

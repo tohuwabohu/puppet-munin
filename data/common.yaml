@@ -1,0 +1,19 @@
+---
+munin::ensure: installed
+munin::enable: true
+
+munin::hostname: "%{::fqdn}"
+munin::contacts: []
+munin::plugins: []
+munin::disable_unmanaged_plugins: false
+
+munin::master_package_name: munin
+munin::master_config_template: munin/etc/munin/munin.conf.erb
+munin::master_html_dir: /var/cache/munin/www
+
+munin::node_package_name: munin-node
+munin::node_service_name: munin-node
+munin::node_config_template: munin/etc/munin/munin-node.conf.erb
+munin::node_plugins_dir: /etc/munin/plugins
+munin::node_plugins_local_install_dir: /usr/local/share/munin/plugins
+munin::node_timeout: 60

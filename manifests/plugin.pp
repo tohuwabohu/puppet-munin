@@ -30,12 +30,12 @@ define munin::plugin(
     validate_absolute_path($target)
   }
 
-  require munin::params
+  include munin
 
   $real_target = empty($target) ? {
     true    => empty($source_url) ? {
       true    => "/usr/share/munin/plugins/${title}",
-      default => "${munin::params::node_plugins_local_install_dir}/${title}",
+      default => "${munin::node_plugins_local_install_dir}/${title}",
     },
     default => $target,
   }
@@ -49,7 +49,7 @@ define munin::plugin(
     wget::fetch { $source_url:
       destination => $real_target,
       timeout     => 30,
-      require     => File[$munin::params::node_plugins_local_install_dir],
+      require     => File[$munin::node_plugins_local_install_dir],
     }
 
     file { $real_target:
@@ -61,7 +61,7 @@ define munin::plugin(
     }
   }
 
-  file { "${munin::params::node_plugins_dir}/${title}":
+  file { "${munin::node_plugins_dir}/${title}":
     ensure  => $file_ensure,
     target  => $real_target,
     owner   => 'root',

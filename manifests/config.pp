@@ -37,7 +37,7 @@ class munin::config inherits munin {
     mode    => '0444',
   }
 
-  file { $munin::params::node_plugins_dir:
+  file { $munin::node_plugins_dir:
     ensure  => $directory_ensure,
     owner   => 'root',
     group   => 'root',

@@ -12,10 +12,10 @@
 #
 class munin::install inherits munin {
   $packages = [
-    $munin::params::master_package_name,
-    $munin::params::node_package_name
+    $munin::master_package_name,
+    $munin::node_package_name
   ]
-  $local_install_dir = dirname($munin::params::node_plugins_local_install_dir)
+  $local_install_dir = dirname($munin::node_plugins_local_install_dir)
 
   package { $packages:
     ensure => $munin::ensure
@@ -28,7 +28,7 @@ class munin::install inherits munin {
     mode   => '0755',
   }
 
-  file { $munin::params::node_plugins_local_install_dir:
+  file { $munin::node_plugins_local_install_dir:
     ensure => directory,
     owner  => 'root',
     group  => 'root',

@@ -39,20 +39,25 @@
 #   Martin Meinhold <Martin.Meinhold@gmx.de>
 #
 class munin (
-  $ensure                    = $munin::params::ensure,
-  $enable                    = $munin::params::enable,
+  $ensure,
+  $enable,
 
-  $hostname                  = $munin::params::hostname,
-  $contacts                  = $munin::params::contacts,
-  $plugins                   = $munin::params::plugins,
-  $disable_unmanaged_plugins = $munin::params::disable_unmanaged_plugins,
+  $hostname,
+  $contacts,
+  $plugins,
+  $disable_unmanaged_plugins,
 
-  $master_config_template    = $munin::params::master_config_template,
-  $master_html_dir           = $munin::params::master_html_dir,
+  $master_package_name,
+  $master_config_template,
+  $master_html_dir,
 
-  $node_config_template      = $munin::params::node_config_template,
-  $node_timeout              = $munin::params::node_timeout,
-) inherits munin::params {
+  $node_package_name,
+  $node_plugins_dir,
+  $node_plugins_local_install_dir,
+  $node_config_template,
+  $node_service_name,
+  $node_timeout,
+) {
 
   validate_string($ensure)
   validate_bool($enable)

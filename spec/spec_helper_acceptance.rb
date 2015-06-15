@@ -14,6 +14,7 @@ RSpec.configure do |c|
 
       # Install dependencies
       on host, puppet('module', 'install', 'puppetlabs-stdlib', '--version 4.1.0')
+      on host, puppet('module', 'install', 'ripienaar-module_data', '--version 0.0.3')
       on host, puppet('module', 'install', 'maestrodev-wget', '--version 1.7.0')
     end
   end
